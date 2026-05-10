@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BigPlanetarium - learn about space and planets">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>BigPlanetarium</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background music that loops continuously -->
+  <audio id="bgMusic" loop>
+    <source src="Assets/music.mp3" type="audio/mp3">
+    Your browser does not support audio playback.
+  </audio>
+
+  <!-- Mute button — icon and toggle are handled by music.js -->
+  <button id="muteBtn" aria-label="Mute background music"></button>
+
+  <!-- Star canvas sits behind all content -->
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+  <!-- Skip link lets keyboard users jump straight past the nav bar -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Nav starts transparent and goes solid on scroll via scroll.js -->
+  <nav aria-label="Main navigation" id="mainNav">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">BigPlanetarium</span>
+    </a>
+    <ul>
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+      <li><a href="earth.html">Earth</a></li>
+      <li><a href="explore.html">Explore</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- Hero section -->
+    <section class="hero" aria-label="Welcome">
+      <div class="hero-badge">✦ Est. 2026 &nbsp;·&nbsp; Dubai, UAE</div>
+
+      <!-- Two spans so each title line can be styled independently -->
+      <h1 class="hero-title">
+        <span class="hero-title-top">Explore the</span>
+        <span class="hero-title-bottom">Milky Way</span>
+      </h1>
+
+      <div class="hero-divider" aria-hidden="true"></div>
+
+      <p>Welcome to your neighbourhood planetarium. Step inside to discover the wonders of our galaxy in plain language.</p>
+
+      <div class="hero-btns">
+        <a href="earth.html" class="btn-purple">Explore Earth</a>
+        <a href="explore.html" class="btn-outline">See All Planets</a>
+      </div>
+
+      <!-- Bouncing scroll hint nudges users to scroll down -->
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <div class="hero-arrow">↓</div>
+      </div>
+    </section>
+
+    <!-- Milky Way facts: cards on the left, GIF on the right -->
+    <section class="cards-section" aria-labelledby="mw-heading">
+      <div class="section-top reveal">
+        <h2 id="mw-heading">The Milky Way</h2>
+        <p>Our home galaxy — a giant spiral of stars, gas, and mystery.</p>
+      </div>
+
+      <div class="mw-layout">
+
+        <div class="mw-cards">
+          <article class="card reveal">
+            <h3>100 – 400 Billion Stars</h3>
+            <p>Our galaxy contains hundreds of billions of stars. The Sun is just one of them — an ordinary star sitting in one of the Milky Way's spiral arms.</p>
+          </article>
+
+          <article class="card reveal">
+            <h3>100,000 Light-Years Wide</h3>
+            <p>If you could travel at the speed of light, it would still take 100,000 years to cross the Milky Way from one side to the other.</p>
+          </article>
+
+          <article class="card reveal">
+            <h3>A Galactic Year is 225 Million Earth Years</h3>
+            <p>Our entire solar system orbits the center of the Milky Way. One full orbit takes about 225 million Earth years to complete.</p>
+          </article>
+
+          <article class="card reveal">
+            <h3>Sagittarius A* — The Monster at the Center</h3>
+            <p>At the very heart of the Milky Way sits a supermassive black hole. It is about 4 million times more massive than our Sun.</p>
+          </article>
+
+          <article class="card reveal">
+            <h3>The Milky Way Has Satellite Galaxies</h3>
+            <p>Two smaller galaxies — the Large and Small Magellanic Clouds — orbit the Milky Way and are visible from Earth's southern hemisphere.</p>
+          </article>
+
+          <article class="card reveal">
+            <h3>We Live in the Orion Arm</h3>
+            <p>Our solar system is in a smaller spiral arm called the Orion Arm, roughly 26,000 light-years from the galactic center.</p>
+          </article>
+        </div>
+
+        <!-- GIF is sticky so it stays visible while scrolling through the cards -->
+        <div class="mw-video reveal">
+          <img src="Assets/milkyway.gif" alt="Timelapse of the Milky Way moving across the night sky" class="mw-gif">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Universe Beyond facts section -->
+    <section class="universe-section" aria-labelledby="uni-heading">
+      <div class="section-top reveal">
+        <h2 id="uni-heading">The Universe Beyond</h2>
+        <p>Zoom out past the Milky Way and discover just how vast existence really is.</p>
+      </div>
+
+      <ol class="uni-list">
+
+        <li class="uni-item reveal">
+          <div class="num" aria-hidden="true">1</div>
+          <div>
+            <h3>How Big is the Universe?</h3>
+            <p>The observable universe stretches about 93 billion light-years across. Beyond that we simply cannot see — light from those regions hasn't reached us yet.</p>
+          </div>
+        </li>
+
+        <li class="uni-item reveal">
+          <div class="num" aria-hidden="true">2</div>
+          <div>
+            <h3>There Are Billions of Galaxies</h3>
+            <p>The Milky Way is just one of an estimated 2 trillion galaxies. Each galaxy contains billions to trillions of stars — more than all the grains of sand on every beach on Earth.</p>
+          </div>
+        </li>
+
+        <li class="uni-item reveal">
+          <div class="num" aria-hidden="true">3</div>
+          <div>
+            <h3>The Universe is 13.8 Billion Years Old</h3>
+            <p>The universe began with the Big Bang about 13.8 billion years ago. Our solar system didn't form until the universe was already 9 billion years old.</p>
+          </div>
+        </li>
+
+        <li class="uni-item reveal">
+          <div class="num" aria-hidden="true">4</div>
+          <div>
+            <h3>Dark Matter and Dark Energy</h3>
+            <p>Only about 5% of the universe is made of ordinary matter. The rest is dark matter (27%) and dark energy (68%) — things we can't see but know exist.</p>
+          </div>
+        </li>
+
+      </ol>
+    </section>
+
+    <!-- Bottom call to action linking to Earth and Explore pages -->
+    <section class="cta reveal" aria-labelledby="cta-heading">
+      <h2 id="cta-heading">Ready to go deeper?</h2>
+      <p>Learn about our home planet then explore the rest of the solar system.</p>
+      <div class="cta-btns">
+        <a href="earth.html" class="btn-purple">Explore Earth</a>
+        <a href="explore.html" class="btn-outline">Explore Planets</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 BigPlanetarium · Made for curious explorers</p>
+  </footer>
+
+  <!-- Scripts at the bottom so the DOM is fully built before they run -->
+  <script src="Scripts/stars.js"></script>
+  <script src="Scripts/music.js"></script>
+  <script src="Scripts/scroll.js"></script>
+
+</body>
+</html>

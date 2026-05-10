@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- earth.html — BigPlanetarium Earth page -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Learn about Earth - facts, fun facts, and a video">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>BigPlanetarium - Earth</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background music — same setup as index.html -->
+  <audio id="bgMusic" loop>
+    <source src="Assets/music.mp3" type="audio/mp3">
+    Your browser does not support audio playback.
+  </audio>
+
+  <!-- Mute button — toggle handled by music.js -->
+  <button id="muteBtn" aria-label="Mute background music">
+    🔊
+  </button>
+
+  <!-- Decorative star canvas hidden from screen readers -->
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+  <!-- Skip link matches the id on <main> -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- class="active" and aria-current="page" are on the Earth link for this page -->
+  <nav aria-label="Main navigation" id="mainNav">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">BigPlanetarium</span>
+    </a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="earth.html" class="active" aria-current="page">Earth</a></li>
+      <li><a href="explore.html">Explore</a></li>
+    </ul>
+  </nav>
+
+
+  <main id="main">
+
+    <!-- Page header — .reveal triggers the scroll-in animation from scroll.js -->
+    <header class="page-header reveal">
+      <h1>Earth – Our Home Planet</h1>
+      <p>Earth is the third planet from the Sun and the only astronomical object known to harbor life. It's a beautiful blue marble floating in the vastness of space.</p>
+    </header>
+
+
+    <!-- Two-column section: fact cards left, Earth photo right -->
+    <section class="earth-body" aria-label="Earth facts">
+
+      <!-- Left column: Key Facts and Fun Facts cards stacked vertically -->
+      <div class="earth-left">
+
+        <!-- id="keyfacts" allows deep-linking to this card (e.g. earth.html#keyfacts) -->
+        <div class="info-card reveal">
+          <h2 id="keyfacts">Key Facts</h2>
+          <p><strong>Distance from Sun:</strong> ~150 million km</p>
+          <p><strong>Type:</strong> Terrestrial planet</p>
+          <p><strong>Average Temperature:</strong> ~15°C / 59°F</p>
+        </div>
+
+        <!-- <ul> because these facts are unordered; custom purple bullets applied via ::before in CSS -->
+        <div class="info-card reveal">
+          <h2 id="funfacts">Fun Facts</h2>
+          <ul>
+            <li>It's the only planet not named after a god.</li>
+            <li>About 71% of the surface is covered by water.</li>
+            <li>It's the only known planet with life.</li>
+            <li>Takes 365.25 days to orbit the Sun.</li>
+            <li>Has exactly one natural satellite — the Moon.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Right column: Earth photo with a gentle floating animation -->
+      <div class="earth-right reveal">
+        <img
+          src="Assets/earth2.jpg"
+          alt="A photo of Earth taken from space showing blue oceans, green land and white clouds"
+        >
+      </div>
+
+    </section>
+
+
+    <!-- Responsive 16:9 YouTube embed using the padding-bottom: 56.25% trick -->
+    <section class="video-bit reveal" aria-labelledby="vid-heading">
+      <h2 id="vid-heading">Watch: Earth from Space</h2>
+      <div class="vid-wrap">
+        <!-- title attribute is required for accessibility — screen readers announce it -->
+        <iframe
+          src="https://www.youtube.com/embed/HCDVN7DCzYE"
+          title="Earth 101 by National Geographic - a video about our planet"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <p>© 2026 BigPlanetarium · Made for curious explorers</p>
+  </footer>
+
+
+  <!-- script.js is not loaded here — the planet explorer is only needed on explore.html -->
+  <script src="Scripts/stars.js"></script>
+  <script src="Scripts/music.js"></script>
+  <script src="Scripts/scroll.js"></script>
+
+</body>
+</html>
