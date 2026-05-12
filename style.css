@@ -518,6 +518,11 @@ nav ul a:focus {
   object-position: center;
 }
 
+.scale-img--next {
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* Gradient vignette so text stays readable */
 .scale-img-vignette {
   position: absolute;
@@ -1549,117 +1554,4 @@ footer {
     transition: none !important;
   }
   .reveal { opacity: 1; transform: none; }
-}
-
-
-
-/* ── COUNTDOWN TIMER ────────────────────────────────────────── */
-
-/* Two-column layout: list left, countdown right */
-.upcoming-layout {
-  display: flex;
-  gap: 3rem;
-  align-items: flex-start;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-.upcoming-layout .upcoming-list {
-  flex: 1 1 0;
-}
-
-.countdown-block {
-  flex: 0 0 300px;
-  position: sticky;
-  top: 100px;
-  text-align: center;
-  background: var(--bg-card);
-  border: 1px solid var(--accent-border);
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  box-shadow: 0 0 40px rgba(108, 61, 255, 0.12);
-}
-
-.countdown-mission-title {
-  font-size: 0.75rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 0.75rem;
-}
-
-.countdown-mission-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  color: var(--white);
-  line-height: 1.15;
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.02em;
-}
-
-.countdown-mission-date {
-  font-size: 0.8rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 1.6rem;
-}
-
-.countdown-timer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.3rem;
-  flex-wrap: wrap;
-}
-
-.countdown-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 56px;
-}
-
-.countdown-num {
-  font-family: 'DM Mono', monospace;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 700;
-  color: var(--white);
-  background: var(--bg-surface);
-  border: 1px solid var(--accent-border);
-  border-radius: 8px;
-  padding: 0.35rem 0.6rem;
-  min-width: 56px;
-  text-align: center;
-  box-shadow: 0 0 12px rgba(108, 61, 255, 0.15);
-  letter-spacing: 0.04em;
-}
-
-.countdown-unit-label {
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 0.4rem;
-}
-
-.countdown-sep {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent);
-  padding-bottom: 1.2rem;
-  align-self: center;
-}
-
-/* Stack on mobile */
-@media (max-width: 768px) {
-  .upcoming-layout {
-    flex-direction: column;
-  }
-  .countdown-block {
-    flex: none;
-    width: 100%;
-    position: static;
-  }
 }
