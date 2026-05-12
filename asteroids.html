@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- asteroids.html -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track asteroids and near-Earth objects passing close to our planet this week.">
+  <meta name="theme-color" content="#080810">
+  <title>BigPlanetarium - Asteroid Watch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* page header */
+    .asteroid-header {
+      padding: clamp(120px, 16vw, 180px) var(--gutter) clamp(40px, 6vw, 80px);
+      max-width: 720px;
+    }
+    .asteroid-header .overline {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .asteroid-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 100px);
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .asteroid-header p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    /* date bar */
+    .date-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 var(--gutter) 40px;
+      flex-wrap: wrap;
+    }
+    .date-bar label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .date-bar input[type="date"] {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 8px 14px;
+      cursor: pointer;
+      outline: none;
+      color-scheme: dark;
+    }
+    .date-bar input[type="date"]:focus {
+      border-color: var(--accent);
+    }
+    .date-bar .btn-fetch {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--accent);
+      border: none;
+      border-radius: 3px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .date-bar .btn-fetch:hover { opacity: 0.85; }
+    .date-bar .btn-fetch:disabled { opacity: 0.4; cursor: wait; }
+
+    /* summary stats */
+    .neo-stats {
+      display: flex;
+      gap: 2px;
+      padding: 0 var(--gutter) 48px;
+      flex-wrap: wrap;
+    }
+    .neo-stat {
+      flex: 1;
+      min-width: 140px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+    }
+    .neo-stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 56px);
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .neo-stat-num.danger { color: #ff4f4f; }
+    .neo-stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* loading and error states */
+    .neo-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 80px var(--gutter);
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+    .neo-spinner {
+      width: 36px;
+      height: 36px;
+      border: 2px solid rgba(108,61,255,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .neo-error {
+      padding: 40px var(--gutter);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #ff4f4f;
+      letter-spacing: 1px;
+    }
+
+    /* asteroid table */
+    .neo-table-wrap {
+      padding: 0 var(--gutter) var(--section-pad);
+      overflow-x: auto;
+    }
+    .neo-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+    }
+    .neo-table thead tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .neo-table th {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      padding: 0 16px 14px 0;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .neo-table td {
+      padding: 18px 16px 18px 0;
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .neo-table tbody tr {
+      transition: background 0.15s;
+    }
+    .neo-table tbody tr:hover {
+      background: rgba(255,255,255,0.025);
+    }
+
+    /* asteroid name */
+    .neo-name {
+      font-weight: 500;
+      color: var(--white);
+      font-size: 15px;
+    }
+    .neo-id {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 3px;
+    }
+
+    /* hazard badge */
+    .neo-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+    .neo-badge.safe {
+      background: rgba(108,61,255,0.15);
+      border: 1px solid rgba(108,61,255,0.3);
+      color: rgba(255,255,255,0.6);
+    }
+    .neo-badge.hazardous {
+      background: rgba(255,79,79,0.12);
+      border: 1px solid rgba(255,79,79,0.35);
+      color: #ff4f4f;
+    }
+
+    /* distance bar */
+    .neo-dist-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .neo-dist-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 2px;
+      min-width: 60px;
+    }
+    .neo-dist-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--accent);
+      transition: width 0.6s ease;
+    }
+    .neo-dist-bar-fill.close { background: #ff4f4f; }
+
+    /* miss distance label */
+    .neo-dist-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* api key notice */
+    .api-notice {
+      margin: 0 var(--gutter) 32px;
+      padding: 16px 20px;
+      background: rgba(108,61,255,0.08);
+      border: 1px solid rgba(108,61,255,0.25);
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+    }
+    .api-notice a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .api-notice a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+  <audio id="bgMusic" loop style="display:none">
+    <source src="Assets/music.mp3" type="audio/mp3">
+  </audio>
+
+  <button id="muteBtn" aria-label="Mute background music"></button>
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <nav aria-label="Main navigation" id="mainNav">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">BigPlanetarium</span>
+    </a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="missions.html">Missions</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="asteroids.html" class="active" aria-current="page">Asteroid Watch</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <header class="asteroid-header reveal">
+      <p class="overline">Near Earth Objects</p>
+      <h1>Asteroid Watch</h1>
+      <p>Real-time data from NASA's Center for Near Earth Object Studies — tracking every space rock passing close to our planet.</p>
+    </header>
+
+    <!-- date picker -->
+    <div class="date-bar reveal">
+      <label for="startDate">From</label>
+      <input type="date" id="startDate">
+      <label for="endDate">To</label>
+      <input type="date" id="endDate">
+      <button class="btn-fetch" id="fetchBtn">Search</button>
+    </div>
+
+    <!-- summary stats -->
+    <div class="neo-stats reveal" id="neoStats" style="display:none">
+      <div class="neo-stat">
+        <div class="neo-stat-num" id="statTotal">—</div>
+        <div class="neo-stat-label">Asteroids tracked</div>
+      </div>
+      <div class="neo-stat">
+        <div class="neo-stat-num danger" id="statHazardous">—</div>
+        <div class="neo-stat-label">Potentially hazardous</div>
+      </div>
+      <div class="neo-stat">
+        <div class="neo-stat-num" id="statClosest">—</div>
+        <div class="neo-stat-label">Closest miss (lunar dist.)</div>
+      </div>
+      <div class="neo-stat">
+        <div class="neo-stat-num" id="statFastest">—</div>
+        <div class="neo-stat-label">Fastest (km/s)</div>
+      </div>
+    </div>
+
+    <!-- results -->
+    <div id="neoResults">
+      <div class="neo-loading" id="neoLoading" style="display:none">
+        <div class="neo-spinner"></div>
+        SCANNING FOR NEAR EARTH OBJECTS...
+      </div>
+      <div class="neo-error" id="neoError" style="display:none"></div>
+      <div class="neo-table-wrap" id="neoTableWrap" style="display:none">
+        <table class="neo-table" aria-label="Near Earth Objects">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Close Approach</th>
+              <th>Est. Diameter</th>
+              <th>Miss Distance</th>
+              <th>Velocity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="neoTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 BigPlanetarium · Made for curious explorers · Asteroid data via <a href="https://api.nasa.gov" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">NASA NeoWs API</a></p>
+  </footer>
+
+  <script src="Scripts/stars.js"></script>
+  <script src="Scripts/music.js"></script>
+  <script src="Scripts/scroll.js"></script>
+
+  <script>
+    const API_KEY = 'H0ndTzmtyW4ldeBjxaazL1VxhQzabpYHCbbql2AN'; 
+
+    // default date range: today to +7 days
+    const today = new Date();
+    const weekAhead = new Date();
+    weekAhead.setDate(today.getDate() + 7);
+
+    function fmt(d) {
+      return d.toISOString().split('T')[0];
+    }
+
+    const startInput = document.getElementById('startDate');
+    const endInput   = document.getElementById('endDate');
+    startInput.value = fmt(today);
+    endInput.value   = fmt(weekAhead);
+
+    // Enforce max 7-day range when user changes dates
+    startInput.addEventListener('change', function() {
+      const start = new Date(startInput.value);
+      const maxEnd = new Date(start);
+      maxEnd.setDate(start.getDate() + 7);
+      if (new Date(endInput.value) > maxEnd) {
+        endInput.value = fmt(maxEnd);
+      }
+    });
+
+    // fetch and render
+    document.getElementById('fetchBtn').addEventListener('click', fetchNEOs);
+
+    // Auto-load on page open
+    fetchNEOs();
+
+    async function fetchNEOs() {
+      const start = startInput.value;
+      const end   = endInput.value;
+
+      if (!start || !end) return;
+
+      const startDate = new Date(start);
+      const endDate   = new Date(end);
+      const diffDays  = (endDate - startDate) / (1000 * 60 * 60 * 24);
+      if (diffDays > 7 || diffDays < 0) {
+        showError('Date range must be between 1 and 7 days (NASA API limit).');
+        return;
+      }
+
+      setLoading(true);
+      hideError();
+      hideTable();
+      document.getElementById('neoStats').style.display = 'none';
+
+      const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${start}&end_date=${end}&api_key=${API_KEY}`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`NASA API error: ${res.status}`);
+        const data = await res.json();
+        renderNEOs(data);
+      } catch (err) {
+        showError('Could not load asteroid data. ' + (err.message || 'Check your connection and try again.'));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function renderNEOs(data) {
+      // Flatten all NEOs from all dates into one array
+      const allNEOs = Object.values(data.near_earth_objects).flat();
+
+      // Sort by closest approach distance ascending
+      allNEOs.sort((a, b) => {
+        const distA = parseFloat(a.close_approach_data[0]?.miss_distance?.lunar ?? Infinity);
+        const distB = parseFloat(b.close_approach_data[0]?.miss_distance?.lunar ?? Infinity);
+        return distA - distB;
+      });
+
+      if (allNEOs.length === 0) {
+        showError('No near-Earth objects found for this date range.');
+        return;
+      }
+
+      // stats
+      const hazardous = allNEOs.filter(n => n.is_potentially_hazardous_asteroid);
+      const closest   = allNEOs[0]; // already sorted by distance
+      const closestLD = parseFloat(closest.close_approach_data[0]?.miss_distance?.lunar ?? 0).toFixed(1);
+      const fastest   = allNEOs.reduce((max, n) => {
+        const v = parseFloat(n.close_approach_data[0]?.relative_velocity?.kilometers_per_second ?? 0);
+        return v > max ? v : max;
+      }, 0);
+
+      document.getElementById('statTotal').textContent     = allNEOs.length;
+      document.getElementById('statHazardous').textContent = hazardous.length;
+      document.getElementById('statClosest').textContent   = closestLD + ' LD';
+      document.getElementById('statFastest').textContent   = fastest.toFixed(1);
+      document.getElementById('neoStats').style.display    = 'flex';
+
+      // Max distance for bar scaling (cap at 100 LD)
+      const maxLD = 100;
+
+      // table rows
+      const rows = allNEOs.map(neo => {
+        const approach  = neo.close_approach_data[0] || {};
+        const distLD    = parseFloat(approach.miss_distance?.lunar ?? 0);
+        const distKm    = parseFloat(approach.miss_distance?.kilometers ?? 0);
+        const velocity  = parseFloat(approach.relative_velocity?.kilometers_per_second ?? 0);
+        const minDiam   = neo.estimated_diameter?.meters?.estimated_diameter_min ?? 0;
+        const maxDiam   = neo.estimated_diameter?.meters?.estimated_diameter_max ?? 0;
+        const hazard    = neo.is_potentially_hazardous_asteroid;
+        const dateRaw   = approach.close_approach_date_full || approach.close_approach_date || '—';
+        const barPct    = Math.min((distLD / maxLD) * 100, 100).toFixed(1);
+        const barClass  = distLD < 5 ? 'close' : '';
+
+        // Format miss distance
+        const distDisplay = distLD < 10
+          ? distLD.toFixed(2) + ' LD'
+          : Math.round(distLD) + ' LD';
+
+        // Format diameter
+        const diamDisplay = minDiam < 1000
+          ? `${Math.round(minDiam)}–${Math.round(maxDiam)} m`
+          : `${(minDiam/1000).toFixed(1)}–${(maxDiam/1000).toFixed(1)} km`;
+
+        // Clean up name (remove parentheses wrapping)
+        const name = neo.name.replace(/[()]/g, '').trim();
+
+        return `
+          <tr>
+            <td>
+              <div class="neo-name">${escHtml(name)}</div>
+              <div class="neo-id">${escHtml(neo.id)}</div>
+            </td>
+            <td>${escHtml(dateRaw)}</td>
+            <td>${escHtml(diamDisplay)}</td>
+            <td>
+              <div class="neo-dist-bar-wrap">
+                <div class="neo-dist-val">${escHtml(distDisplay)}</div>
+                <div class="neo-dist-bar-bg">
+                  <div class="neo-dist-bar-fill ${barClass}" style="width:${barPct}%"></div>
+                </div>
+              </div>
+            </td>
+            <td class="neo-dist-val">${velocity.toFixed(2)} km/s</td>
+            <td>
+              <span class="neo-badge ${hazard ? 'hazardous' : 'safe'}">
+                ${hazard ? '⚠ Hazardous' : 'Safe'}
+              </span>
+            </td>
+          </tr>`;
+      }).join('');
+
+      document.getElementById('neoTableBody').innerHTML = rows;
+      document.getElementById('neoTableWrap').style.display = 'block';
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function setLoading(on) {
+      document.getElementById('neoLoading').style.display = on ? 'flex' : 'none';
+      document.getElementById('fetchBtn').disabled = on;
+    }
+    function showError(msg) {
+      const el = document.getElementById('neoError');
+      el.textContent = '⚠ ' + msg;
+      el.style.display = 'block';
+    }
+    function hideError() { document.getElementById('neoError').style.display = 'none'; }
+    function hideTable() { document.getElementById('neoTableWrap').style.display = 'none'; }
+  </script>
+
+</body>
+</html>

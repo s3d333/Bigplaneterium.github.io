@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- missions.html — BigPlanetarium Space Missions page -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore humanity's greatest space missions — from the Moon landings to Mars rovers and beyond.">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>BigPlanetarium - Missions</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background music — same setup as other pages -->
+  <audio id="bgMusic" loop>
+    <source src="Assets/music.mp3" type="audio/mp3">
+    Your browser does not support audio playback.
+  </audio>
+
+  <!-- Mute button — toggle handled by music.js -->
+  <button id="muteBtn" aria-label="Mute background music"></button>
+
+  <!-- Decorative star canvas hidden from screen readers -->
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+  <!-- Skip link jumps keyboard users past the nav bar -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- Missions link is active on this page -->
+  <nav aria-label="Main navigation" id="mainNav">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">BigPlanetarium</span>
+    </a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="missions.html" class="active" aria-current="page">Missions</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="asteroids.html">Asteroid Watch</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <header class="page-header reveal">
+      <h1>Space Missions</h1>
+      <p>From the first satellite to rovers on Mars — humanity has been pushing the boundaries of space exploration for over 60 years.</p>
+    </header>
+
+    <section class="missions-section" aria-labelledby="missions-heading">
+      <div class="section-top reveal">
+        <h2 id="missions-heading">Greatest Missions of All Time</h2>
+        <p>Eight missions that changed everything we know about space.</p>
+      </div>
+
+      <div class="missions-grid">
+
+        <article class="mission-card reveal" aria-label="Sputnik 1 mission">
+          <div class="mission-year">1957</div>
+          <div class="mission-flag">🇷🇺</div>
+          <h3>Sputnik 1</h3>
+          <p class="mission-agency">Soviet Union</p>
+          <p>The world's first artificial satellite. Sputnik 1 was the size of a beach ball and took just 98 minutes to orbit Earth. Its launch started the Space Race between the US and USSR.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="Apollo 11 mission">
+          <div class="mission-year">1969</div>
+          <div class="mission-flag">🇺🇸</div>
+          <h3>Apollo 11</h3>
+          <p class="mission-agency">NASA</p>
+          <p>The mission that landed the first humans on the Moon. Neil Armstrong and Buzz Aldrin walked on the lunar surface on July 20, 1969, while Michael Collins orbited above.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="Voyager 1 mission">
+          <div class="mission-year">1977</div>
+          <div class="mission-flag">🇺🇸</div>
+          <h3>Voyager 1</h3>
+          <p class="mission-agency">NASA</p>
+          <p>Launched in 1977, Voyager 1 is the furthest human-made object from Earth. It has left our solar system entirely and is travelling through interstellar space at over 60,000 km/h.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="Hubble Space Telescope">
+          <div class="mission-year">1990</div>
+          <div class="mission-flag">🇺🇸</div>
+          <h3>Hubble Space Telescope</h3>
+          <p class="mission-agency">NASA / ESA</p>
+          <p>Hubble orbits Earth at 547 km above the surface and has taken over 1.5 million observations. It helped scientists calculate the age of the universe and discover its expansion is accelerating.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="Mars Pathfinder mission">
+          <div class="mission-year">1997</div>
+          <div class="mission-flag">🇺🇸</div>
+          <h3>Mars Pathfinder</h3>
+          <p class="mission-agency">NASA</p>
+          <p>The first mission to deploy a rover on another planet. The Sojourner rover explored Mars for 83 days and sent back over 550 images, proving rovers could work on other planets.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="International Space Station">
+          <div class="mission-year">1998</div>
+          <div class="mission-flag">🌍</div>
+          <h3>International Space Station</h3>
+          <p class="mission-agency">NASA / ESA / Roscosmos / JAXA / CSA</p>
+          <p>The largest structure ever assembled in space. The ISS has been continuously inhabited since November 2000 and orbits Earth 16 times a day at around 28,000 km/h.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="Curiosity Rover mission">
+          <div class="mission-year">2012</div>
+          <div class="mission-flag">🇺🇸</div>
+          <h3>Curiosity Rover</h3>
+          <p class="mission-agency">NASA</p>
+          <p>Curiosity landed on Mars using a never-before-seen sky crane system. It confirmed that Mars once had conditions suitable for microbial life and is still exploring today.</p>
+        </article>
+
+        <article class="mission-card reveal" aria-label="James Webb Space Telescope">
+          <div class="mission-year">2021</div>
+          <div class="mission-flag">🌍</div>
+          <h3>James Webb Telescope</h3>
+          <p class="mission-agency">NASA / ESA / CSA</p>
+          <p>The most powerful space telescope ever built. Webb can see galaxies from over 13 billion years ago and has transformed our understanding of the early universe and exoplanets.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Quick stats bar -->
+    <section class="stats-bar reveal" aria-label="Space exploration statistics">
+      <div class="stat-item">
+        <span class="stat-number">600+</span>
+        <span class="stat-label">Humans in space</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5</span>
+        <span class="stat-label">Mars rovers landed</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">12</span>
+        <span class="stat-label">Humans walked on the Moon</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">24bn km</span>
+        <span class="stat-label">Voyager 1 from Earth</span>
+      </div>
+    </section>
+
+    <!-- Upcoming missions -->
+    <section class="upcoming-section" aria-labelledby="upcoming-heading">
+      <div class="section-top reveal">
+        <h2 id="upcoming-heading">What's Coming Next?</h2>
+        <p>The next chapter of space exploration is already being written.</p>
+      </div>
+
+      <!-- Two-column layout: mission list left, countdown right -->
+      <div class="upcoming-layout">
+
+        <div class="upcoming-list">
+
+          <div class="upcoming-item reveal">
+            <div class="upcoming-dot" aria-hidden="true"></div>
+            <div>
+              <h3>Artemis Programme</h3>
+              <p>NASA's Artemis missions aim to return humans to the Moon and establish a long-term lunar presence — including the first woman and first person of colour to walk on the Moon.</p>
+            </div>
+          </div>
+
+          <div class="upcoming-item reveal">
+            <div class="upcoming-dot" aria-hidden="true"></div>
+            <div>
+              <h3>Mars Sample Return</h3>
+              <p>A joint NASA and ESA mission to bring Martian rock samples back to Earth for the first time. Scientists hope the samples may contain evidence of ancient microbial life.</p>
+            </div>
+          </div>
+
+          <div class="upcoming-item reveal">
+            <div class="upcoming-dot" aria-hidden="true"></div>
+            <div>
+              <h3>Europa Clipper</h3>
+              <p>Launched in 2024, Europa Clipper will fly past Jupiter's moon Europa nearly 50 times to study its icy ocean — one of the most promising places to look for life in our solar system.</p>
+            </div>
+          </div>
+
+          <div class="upcoming-item reveal">
+            <div class="upcoming-dot" aria-hidden="true"></div>
+            <div>
+              <h3>Crewed Mars Mission</h3>
+              <p>Both NASA and SpaceX are working toward sending humans to Mars within the next decade. Such a mission would take around 7 months of travel each way.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Countdown timer — sticks to the right of the mission list -->
+        <div class="countdown-block reveal" aria-label="Countdown to next mission launch">
+          <p class="countdown-mission-title">🚀 Next Launch</p>
+          <p class="countdown-mission-name">Nancy Grace Roman<br>Space Telescope</p>
+          <p class="countdown-mission-date">September 2026</p>
+          <div class="countdown-timer" id="missionCountdown" aria-live="polite">
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-days">--</span>
+              <span class="countdown-unit-label">Days</span>
+            </div>
+            <div class="countdown-sep" aria-hidden="true">:</div>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-hours">--</span>
+              <span class="countdown-unit-label">Hours</span>
+            </div>
+            <div class="countdown-sep" aria-hidden="true">:</div>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-mins">--</span>
+              <span class="countdown-unit-label">Mins</span>
+            </div>
+            <div class="countdown-sep" aria-hidden="true">:</div>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-secs">--</span>
+              <span class="countdown-unit-label">Secs</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 BigPlanetarium · Made for curious explorers</p>
+  </footer>
+
+  <script src="Scripts/stars.js"></script>
+  <script src="Scripts/music.js"></script>
+  <script src="Scripts/scroll.js"></script>
+  <script>
+    // Countdown to Nancy Grace Roman Space Telescope launch — September 1 2026 (estimated)
+    var launchDate = new Date("2026-09-01T00:00:00Z");
+
+    function updateCountdown() {
+      var now = new Date();
+      var diff = launchDate - now;
+      if (diff <= 0) {
+        document.getElementById("missionCountdown").innerHTML = "<p style='color:var(--accent);font-size:1.2rem;'>🚀 Mission has launched!</p>";
+        return;
+      }
+      var days  = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var secs  = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("cd-days").textContent  = String(days).padStart(2,"0");
+      document.getElementById("cd-hours").textContent = String(hours).padStart(2,"0");
+      document.getElementById("cd-mins").textContent  = String(mins).padStart(2,"0");
+      document.getElementById("cd-secs").textContent  = String(secs).padStart(2,"0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>

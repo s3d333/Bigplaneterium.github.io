@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BigPlanetarium - learn about space and planets">
+  <meta name="theme-color" content="#080810">
+  <title>BigPlanetarium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="Assets/music.mp3" type="audio/mp3">
+  </audio>
+
+  <button id="muteBtn" aria-label="Mute background music"></button>
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <nav aria-label="Main navigation" id="mainNav">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">BigPlanetarium</span>
+    </a>
+    <ul>
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+      <li><a href="missions.html">Missions</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="asteroids.html">Asteroid Watch</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Welcome">
+      <video class="hero-video" autoplay muted loop playsinline aria-hidden="true" poster="Assets/download.png">
+        <source src="Assets/hero.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge">✦ Est. 2026 &nbsp;·&nbsp; Dubai, UAE</div>
+
+        <h1 class="hero-title">
+          <span class="hero-title-eyebrow">Explore the</span>
+          <span class="hero-title-main">Milky<br>Way</span>
+        </h1>
+
+        <div class="hero-meta">
+          <p class="hero-desc">Your neighbourhood planetarium. Step inside to discover the wonders of our galaxy in plain language.</p>
+          <div class="hero-btns">
+            <a href="missions.html" class="btn-primary">View Missions</a>
+            <a href="explore.html" class="btn-ghost">See Planets</a>
+          </div>
+        </div>
+
+        <div class="hero-stat" aria-label="Over 600 humans have been to space">
+          <span class="hero-stat-num" id="heroCounter">0</span>
+          <span class="hero-stat-label">humans have<br>been to space</span>
+        </div>
+      </div>
+
+      <div class="hero-scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <div class="hero-arrow">↓</div>
+      </div>
+    </section>
+
+    <!-- SCALE OF THE UNIVERSE -->
+    <section class="scale-section" aria-labelledby="scale-heading">
+
+      <!-- Full-bleed image area -->
+      <div class="scale-img-wrap" aria-hidden="true">
+        <img class="scale-img" id="scaleImg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/1024px-The_Earth_seen_from_Apollo_17.jpg" alt="">
+        <img class="scale-img scale-img--next" id="scaleImgNext" src="" alt="">
+        <div class="scale-img-vignette"></div>
+      </div>
+
+      <!-- Intro label pinned top-left -->
+      <div class="scale-intro">
+        <p class="scale-overline">The big picture</p>
+        <h2 id="scale-heading" class="scale-intro-heading">Scale of the Universe</h2>
+        <p class="scale-intro-sub">Explore how vast existence really is — click Next to zoom out.</p>
+      </div>
+      <div class="scale-overlay-content">
+        <div class="scale-text-block" id="scaleContent" aria-live="polite" aria-atomic="true">
+          <p class="scale-step-label" id="scaleStep">01 / 05</p>
+          <div class="scale-big-num"><span id="scaleNum">12,756</span><span class="scale-unit" id="scaleUnit">km</span></div>
+          <h3 class="scale-title" id="scaleTitle">Our Home — Earth</h3>
+          <p class="scale-desc" id="scaleDesc">The pale blue dot — the only world we know of with life, liquid water, and a breathable sky.</p>
+        </div>
+
+        <div class="scale-nav">
+          <div class="scale-dots" aria-hidden="true">
+            <span class="scale-dot active"></span>
+            <span class="scale-dot"></span>
+            <span class="scale-dot"></span>
+            <span class="scale-dot"></span>
+            <span class="scale-dot"></span>
+          </div>
+          <button class="scale-next-btn" id="scaleNext">
+            Next <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- UNIVERSE BEYOND -->
+    <section class="universe-section" aria-labelledby="uni-heading">
+      <div class="section-top reveal">
+        <p class="overline">The universe beyond</p>
+        <h2 id="uni-heading">Four things that<br>will break your brain</h2>
+      </div>
+
+      <div class="uni-panels">
+        <div class="uni-panel reveal">
+          <div class="uni-panel-text">
+            <p class="uni-panel-overline">How big is it?</p>
+            <h3>The Observable<br>Universe</h3>
+            <p>The observable universe stretches about 93 billion light-years across. Beyond that we simply cannot see — light from those regions hasn't reached us yet.</p>
+          </div>
+          <div class="uni-panel-watermark" aria-hidden="true">93</div>
+        </div>
+
+        <div class="uni-panel uni-panel--flip reveal">
+          <div class="uni-panel-text">
+            <p class="uni-panel-overline">How many galaxies?</p>
+            <h3>Two Trillion<br>Galaxies</h3>
+            <p>The Milky Way is one of an estimated 2 trillion galaxies. Each galaxy contains billions to trillions of stars — more than all the grains of sand on every beach on Earth.</p>
+          </div>
+          <div class="uni-panel-watermark" aria-hidden="true">2T</div>
+        </div>
+
+        <div class="uni-panel reveal">
+          <div class="uni-panel-text">
+            <p class="uni-panel-overline">How old?</p>
+            <h3>13.8 Billion<br>Years Old</h3>
+            <p>The universe began with the Big Bang about 13.8 billion years ago. Our solar system didn't form until the universe was already 9 billion years old.</p>
+          </div>
+          <div class="uni-panel-watermark" aria-hidden="true">13.8</div>
+        </div>
+
+        <div class="uni-panel uni-panel--flip reveal">
+          <div class="uni-panel-text">
+            <p class="uni-panel-overline">What's it made of?</p>
+            <h3>Only 5% Is<br>Ordinary Matter</h3>
+            <p>Only about 5% of the universe is made of ordinary matter. The rest is dark matter (27%) and dark energy (68%) — invisible forces we know exist but cannot directly observe.</p>
+          </div>
+          <div class="uni-panel-watermark" aria-hidden="true">5%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKER -->
+    <section class="ticker-section" aria-label="Space fun facts ticker">
+      <div class="ticker-inner-wrap">
+        <p class="ticker-label" aria-hidden="true">Did you know?</p>
+        <div class="ticker-track" aria-live="off">
+          <div class="ticker-inner">
+            <span>Saturn's rings are only ~10 metres thick but span 282,000 km wide</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>The Sun makes up 99.8% of all the mass in our solar system</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>The Moon is slowly drifting away from Earth at 3.8 cm per year</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>It takes light about 8 minutes to travel from the Sun to Earth</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>There are more stars in the universe than grains of sand on all Earth's beaches</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>A day on Venus is longer than a year on Venus</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>Olympus Mons on Mars is 3× taller than Everest</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>Neutron stars can spin 700 times per second</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>Saturn's rings are only ~10 metres thick but span 282,000 km wide</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>The Sun makes up 99.8% of all the mass in our solar system</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>The Moon is slowly drifting away from Earth at 3.8 cm per year</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+            <span>It takes light about 8 minutes to travel from the Sun to Earth</span>
+            <span class="ticker-dot" aria-hidden="true">✦</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section" aria-labelledby="timeline-heading">
+      <div class="section-top reveal">
+        <p class="overline">History</p>
+        <h2 id="timeline-heading">A history of space exploration</h2>
+        <p class="section-sub">Key moments that changed our understanding of the universe. Drag the timeline sideways.</p>
+      </div>
+
+      <div class="h-timeline-wrap">
+        <div class="h-timeline" role="list">
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">1957</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>Sputnik 1</h3>
+              <p>The Soviet Union launches the world's first artificial satellite, kicking off the Space Race.</p>
+            </div>
+          </div>
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">1961</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>First Human in Space</h3>
+              <p>Yuri Gagarin completes one orbit of Earth in 108 minutes aboard Vostok 1.</p>
+            </div>
+          </div>
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">1969</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>Moon Landing</h3>
+              <p>Neil Armstrong and Buzz Aldrin become the first humans to walk on the Moon. 600 million people watched live.</p>
+            </div>
+          </div>
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">1977</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>Voyager Probes</h3>
+              <p>NASA launches Voyager 1 and 2. They fly past all four outer planets before leaving the solar system.</p>
+            </div>
+          </div>
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">1990</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>Hubble Launched</h3>
+              <p>The Hubble Space Telescope enters orbit, giving humanity its clearest view of deep space.</p>
+            </div>
+          </div>
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">2004</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>Spirit &amp; Opportunity</h3>
+              <p>NASA's twin rovers land on Mars and find clear evidence liquid water once flowed on its surface.</p>
+            </div>
+          </div>
+
+          <div class="h-tl-item" role="listitem">
+            <div class="h-tl-year">2021</div>
+            <div class="h-tl-dot" aria-hidden="true"></div>
+            <div class="h-tl-card">
+              <h3>James Webb Telescope</h3>
+              <p>The most powerful telescope ever built launches on Christmas Day. Its first images show galaxies 13 billion years old.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" aria-labelledby="cta-heading">
+      <div class="cta-nebula" aria-hidden="true">
+        <div class="cta-orb cta-orb--a"></div>
+        <div class="cta-orb cta-orb--b"></div>
+        <div class="cta-orb cta-orb--c"></div>
+      </div>
+      <div class="cta-content reveal">
+        <p class="overline">Ready?</p>
+        <h2 id="cta-heading">Go deeper<br>into the cosmos</h2>
+        <p>Read about humanity's greatest space missions or explore all the planets in our solar system.</p>
+        <div class="cta-btns">
+          <a href="missions.html" class="btn-primary">View Missions</a>
+          <a href="explore.html" class="btn-ghost">Explore Planets</a>
+        </div>
+      </div>
+      <div class="cta-star-graphic" aria-hidden="true">✦</div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 BigPlanetarium · Made for curious explorers</p>
+  </footer>
+
+  <script src="Scripts/stars.js"></script>
+  <script src="Scripts/music.js"></script>
+  <script src="Scripts/scroll.js"></script>
+  <script>
+
+    // Hero counter animation
+    (function() {
+      var target = 627;
+      var el = document.getElementById('heroCounter');
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / 2200, 1);
+        var ease = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(ease * target) + '+';
+        if (p < 1) requestAnimationFrame(step);
+      }
+      setTimeout(function() { requestAnimationFrame(step); }, 800);
+    })();
+
+    // Scale stepper with image zoom
+    (function() {
+      var steps = [
+        {
+          step: '01 / 05', num: '12,756',  unit: 'km',
+          title: 'Our Home — Earth',
+          desc: 'The pale blue dot — the only world we know of with life, liquid water, and a breathable sky.',
+          img: 'Assets/earthh.jpg'
+        },
+        {
+          step: '02 / 05', num: '287',     unit: 'bn km',
+          title: 'Our Solar System',
+          desc: 'Eight planets, five dwarf planets, and billions of smaller objects all held in the Sun\'s grip.',
+          img: 'Assets/solarsystem.jpg'
+        },
+        {
+          step: '03 / 05', num: '100,000', unit: 'light-years',
+          title: 'Our Galaxy — The Milky Way',
+          desc: 'A giant spiral holding 100–400 billion stars. Our Sun sits quietly in one of its outer arms.',
+          img: 'Assets/milkyway.jpg'
+        },
+        {
+          step: '04 / 05', num: '10',      unit: 'million ly',
+          title: 'Our Neighbourhood — Local Group',
+          desc: 'Over 54 galaxies bound together by gravity, including the Milky Way and the Andromeda Galaxy.',
+          img: 'Assets/galaxy.jpg'
+        },
+        {
+          step: '05 / 05', num: '93',      unit: 'billion ly',
+          title: 'The Observable Universe',
+          desc: 'The full extent of everything we can see. Beyond this edge, light simply hasn\'t had time to reach us.',
+          img: 'Assets/universe.jpg'
+        }
+      ];
+
+      var current = 0;
+      var animating = false;
+
+      var img       = document.getElementById('scaleImg');
+      var imgNext   = document.getElementById('scaleImgNext');
+      var content   = document.getElementById('scaleContent');
+      var stepEl    = document.getElementById('scaleStep');
+      var numEl     = document.getElementById('scaleNum');
+      var unitEl    = document.getElementById('scaleUnit');
+      var titleEl   = document.getElementById('scaleTitle');
+      var descEl    = document.getElementById('scaleDesc');
+      var btn       = document.getElementById('scaleNext');
+      var dots      = document.querySelectorAll('.scale-dot');
+
+      // Preload all images
+      steps.forEach(function(s) {
+        var i = new Image(); i.src = s.img;
+      });
+
+      function goTo(index) {
+        if (animating) return;
+        animating = true;
+        btn.disabled = true;
+
+        var s = steps[index];
+
+        // Preload next image
+        imgNext.src = s.img;
+        imgNext.style.opacity = '0';
+        imgNext.style.transform = 'scale(1.18)';
+
+        // Fade text out (220ms animation)
+        content.classList.remove('scale-enter');
+        content.classList.add('scale-exit');
+
+        setTimeout(function() {
+          // Swap text content
+          stepEl.textContent  = s.step;
+          numEl.textContent   = s.num;
+          unitEl.textContent  = s.unit;
+          titleEl.textContent = s.title;
+          descEl.textContent  = s.desc;
+          dots.forEach(function(d, i) { d.classList.toggle('active', i === index); });
+          btn.innerHTML = index === steps.length - 1
+            ? 'Start over <span aria-hidden="true">↺</span>'
+            : 'Next <span aria-hidden="true">→</span>';
+
+          // Fade text back in
+          content.classList.remove('scale-exit');
+          content.classList.add('scale-enter');
+
+          // Start image crossfade simultaneously
+          img.style.transition = 'opacity 0.8s ease, transform 1s ease';
+          img.style.opacity = '0';
+          img.style.transform = 'scale(1.12)';
+
+          imgNext.style.transition = 'opacity 0.8s ease, transform 1s ease';
+          imgNext.style.opacity = '1';
+          imgNext.style.transform = 'scale(1)';
+
+          // After crossfade, promote next image to current
+          setTimeout(function() {
+            img.style.transition = 'none';
+            img.style.opacity = '1';
+            img.style.transform = 'scale(1)';
+            img.src = s.img;
+
+            imgNext.style.transition = 'none';
+            imgNext.style.opacity = '0';
+            imgNext.src = '';
+
+            animating = false;
+            btn.disabled = false;
+          }, 900);
+
+        }, 240);
+      }
+
+      btn.addEventListener('click', function() {
+        current = (current + 1) % steps.length;
+        goTo(current);
+      });
+    })();
+
+    // Timeline drag to scroll
+    (function() {
+      var wrap = document.querySelector('.h-timeline-wrap');
+      if (!wrap) return;
+      var isDown = false, startX, scrollLeft;
+      wrap.style.cursor = 'grab';
+      wrap.addEventListener('mousedown', function(e) {
+        isDown = true;
+        wrap.style.cursor = 'grabbing';
+        startX = e.pageX - wrap.offsetLeft;
+        scrollLeft = wrap.scrollLeft;
+      });
+      document.addEventListener('mouseup', function() { isDown = false; wrap.style.cursor = 'grab'; });
+      wrap.addEventListener('mousemove', function(e) {
+        if (!isDown) return;
+        e.preventDefault();
+        wrap.scrollLeft = scrollLeft - (e.pageX - wrap.offsetLeft - startX);
+      });
+    })();
+
+  </script>
+
+</body>
+</html>

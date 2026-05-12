@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- explore.html — BigPlanetarium Planet Explorer page -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore all 8 planets in the solar system">
+  <meta name="theme-color" content="#0a0a1a">
+  <title>BigPlanetarium - Explore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background music — same setup as the other pages -->
+  <audio id="bgMusic" loop>
+    <source src="Assets/music.mp3" type="audio/mp3">
+    Your browser does not support audio playback.
+  </audio>
+
+  <!-- Mute button — toggle handled by music.js -->
+  <button id="muteBtn" aria-label="Mute background music">
+    🔊
+  </button>
+
+  <!-- Decorative star canvas hidden from screen readers -->
+  <canvas id="starCanvas" aria-hidden="true"></canvas>
+
+  <!-- Skip link jumps keyboard users past the nav bar -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- class="active" and aria-current="page" are on the Explore link for this page -->
+  <nav aria-label="Main navigation" id="mainNav">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">✦</span>
+      <span class="logo-text">BigPlanetarium</span>
+    </a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="missions.html">Missions</a></li>
+      <li><a href="explore.html" class="active" aria-current="page">Explore</a></li>
+      <li><a href="asteroids.html">Asteroid Watch</a></li>
+    </ul>
+  </nav>
+
+
+  <main id="main">
+
+    <!-- Page header with scroll-reveal animation -->
+    <header class="page-header reveal">
+      <h1>Our Planets</h1>
+      <p>Click on any planet to find out more about it.</p>
+    </header>
+
+
+    <!-- Planet selector: buttons left, info box right -->
+    <section class="planets-section" aria-label="Solar system planets">
+      <div class="planets-wrap">
+
+        <!-- LEFT COLUMN — planet buttons grouped by category -->
+        <div class="planets-left">
+
+          <!-- ::before and ::after in CSS draw the horizontal lines on each side of this heading -->
+          <h2 class="row-heading">Inner Planets</h2>
+
+          <!--
+            Each button uses onclick to call showPlanet() in script.js.
+            aria-pressed communicates the selected state to screen readers.
+            Mercury starts active because it is shown by default on page load.
+          -->
+          <div class="planet-row">
+
+            <button class="planet-btn active" onclick="showPlanet('mercury', this)" aria-pressed="true" aria-label="Mercury">
+              <img src="Assets/mercury.png" alt="Mercury">
+              <p>Mercury</p>
+            </button>
+
+            <button class="planet-btn" onclick="showPlanet('venus', this)" aria-pressed="false" aria-label="Venus">
+              <img src="Assets/venus.png" alt="Venus">
+              <p>Venus</p>
+            </button>
+
+            <button class="planet-btn" onclick="showPlanet('earth', this)" aria-pressed="false" aria-label="Earth">
+              <img src="Assets/earth.png" alt="Earth">
+              <p>Earth</p>
+            </button>
+
+            <button class="planet-btn" onclick="showPlanet('mars', this)" aria-pressed="false" aria-label="Mars">
+              <img src="Assets/mars.png" alt="Mars">
+              <p>Mars</p>
+            </button>
+
+          </div>
+
+          <h2 class="row-heading">Gas Giants</h2>
+
+          <!-- Neptune and Uranus are technically Ice Giants but grouped here for simplicity -->
+          <div class="planet-row">
+
+            <button class="planet-btn" onclick="showPlanet('jupiter', this)" aria-pressed="false" aria-label="Jupiter">
+              <img src="Assets/jupiter.png" alt="Jupiter">
+              <p>Jupiter</p>
+            </button>
+
+            <button class="planet-btn" onclick="showPlanet('saturn', this)" aria-pressed="false" aria-label="Saturn">
+              <img src="Assets/saturn.png" alt="Saturn with its rings">
+              <p>Saturn</p>
+            </button>
+
+            <button class="planet-btn" onclick="showPlanet('neptune', this)" aria-pressed="false" aria-label="Neptune">
+              <img src="Assets/neptune.png" alt="Neptune">
+              <p>Neptune</p>
+            </button>
+
+            <button class="planet-btn" onclick="showPlanet('uranus', this)" aria-pressed="false" aria-label="Uranus">
+              <img src="Assets/uranus.png" alt="Uranus">
+              <p>Uranus</p>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT COLUMN — info box updated by showPlanet() in script.js -->
+        <!-- aria-live="polite" announces changes without interrupting the screen reader -->
+        <!-- aria-atomic="true" reads the whole region, not just the changed part -->
+        <aside class="info-box" aria-live="polite" aria-atomic="true" aria-label="Planet information">
+          <h3>Information Box</h3>
+          <!-- Default content shown on page load (Mercury) -->
+          <img id="info-img" src="Assets/mercury.png" alt="Mercury">
+          <h2 id="info-name">MERCURY</h2>
+          <p id="info-text">Mercury is the closest planet to the Sun. It has no atmosphere so temperatures go from -180°C at night to 430°C during the day.</p>
+        </aside>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Comparison section sits outside <main> as a secondary feature -->
+  <!-- aria-labelledby points to the section's <h2> -->
+  <section class="compare-section reveal" aria-labelledby="compare-heading">
+
+    <div class="compare-inner">
+
+      <div class="section-top">
+        <h2 id="compare-heading">Compare Two Planets</h2>
+        <p>Pick any two planets and see how they stack up against each other.</p>
+      </div>
+
+      <!-- Two dropdowns and a Compare button in a flex row -->
+      <!-- aria-label on each <select> replaces a visible <label> for screen readers -->
+      <div class="compare-controls">
+
+        <select id="compareA" aria-label="First planet to compare">
+          <option value="">Pick a planet...</option>
+          <option value="mercury">Mercury</option>
+          <option value="venus">Venus</option>
+          <option value="earth">Earth</option>
+          <option value="mars">Mars</option>
+          <option value="jupiter">Jupiter</option>
+          <option value="saturn">Saturn</option>
+          <option value="uranus">Uranus</option>
+          <option value="neptune">Neptune</option>
+        </select>
+
+        <!-- Decorative VS badge between the two dropdowns -->
+        <span class="compare-vs">VS</span>
+
+        <select id="compareB" aria-label="Second planet to compare">
+          <option value="">Pick a planet...</option>
+          <option value="mercury">Mercury</option>
+          <option value="venus">Venus</option>
+          <option value="earth">Earth</option>
+          <option value="mars">Mars</option>
+          <option value="jupiter">Jupiter</option>
+          <option value="saturn">Saturn</option>
+          <option value="uranus">Uranus</option>
+          <option value="neptune">Neptune</option>
+        </select>
+
+        <!-- Calls runComparison() in script.js on click -->
+        <button class="btn-purple compare-btn" onclick="runComparison()">Compare</button>
+
+      </div>
+
+
+      <!-- Hidden by default; shown and animated by runComparison() in script.js -->
+      <!-- aria-live="polite" announces the new table to screen readers when it appears -->
+      <div id="compareResults" style="display:none;" aria-live="polite" aria-label="Comparison results">
+
+        <!-- Planet name and image headers sit above the table, one per side -->
+        <div class="compare-headers">
+          <div class="compare-planet-header">
+            <img id="compareImgA" src="" alt="">
+            <p id="compareNameA"></p>
+          </div>
+          <div class="compare-planet-header compare-planet-header--right">
+            <img id="compareImgB" src="" alt="">
+            <p id="compareNameB"></p>
+          </div>
+        </div>
+
+        <!-- <table> is appropriate here because the data is genuinely tabular -->
+        <!-- <tbody> is populated by runComparison() in script.js -->
+        <table class="compare-table" aria-label="Planet stats comparison">
+          <tbody id="compareRows">
+            <!-- Table rows are injected here by runComparison() -->
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    <p>© 2026 BigPlanetarium · Made for curious explorers</p>
+  </footer>
+
+
+  <!-- script.js must load first because showPlanet() and runComparison() are called by onclick attributes above -->
+  <script src="Scripts/script.js"></script>
+  <script src="Scripts/stars.js"></script>
+  <script src="Scripts/music.js"></script>
+  <script src="Scripts/scroll.js"></script>
+
+</body>
+</html>
