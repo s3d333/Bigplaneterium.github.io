@@ -8,6 +8,127 @@
   <meta name="theme-color" content="#0a0a1a">
   <title>BigPlanetarium - Missions</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ── Upcoming layout: mission list left, countdown right ── */
+    .upcoming-layout {
+      display: flex;
+      gap: 48px;
+      align-items: stretch;
+    }
+
+    .upcoming-list {
+      flex: 1;
+    }
+
+    /* ── Countdown block — fills full height of the list ── */
+    .countdown-block {
+      flex: 0 0 340px;
+      position: sticky;
+      top: 90px;
+      align-self: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--accent-border);
+      box-shadow: 0 0 60px rgba(108,61,255,0.12), inset 0 0 40px rgba(108,61,255,0.04);
+      border-radius: 4px;
+      padding: 48px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 460px;
+    }
+
+    .countdown-mission-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .countdown-mission-name {
+      font-family: var(--font-display);
+      font-size: 36px;
+      letter-spacing: 1px;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .countdown-mission-date {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+    }
+
+    /* ── Timer row ── */
+    .countdown-timer {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+
+    .countdown-unit {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center;
+      flex: 1;
+    }
+
+    .countdown-num {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 4vw, 3.8rem);
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+
+    .countdown-unit-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .countdown-sep {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 26px;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* ── Responsive: stack on tablet ── */
+    @media (max-width: 900px) {
+      .upcoming-layout {
+        flex-direction: column;
+      }
+      .countdown-block {
+        flex: none;
+        width: 100%;
+        position: static;
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -188,33 +309,6 @@
           </div>
 
         </div>
-
-        <!-- Countdown timer — sticks to the right of the mission list -->
-        <div class="countdown-block reveal" aria-label="Countdown to next mission launch">
-          <p class="countdown-mission-title">🚀 Next Launch</p>
-          <p class="countdown-mission-name">Nancy Grace Roman<br>Space Telescope</p>
-          <p class="countdown-mission-date">September 2026</p>
-          <div class="countdown-timer" id="missionCountdown" aria-live="polite">
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-days">--</span>
-              <span class="countdown-unit-label">Days</span>
-            </div>
-            <div class="countdown-sep" aria-hidden="true">:</div>
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-hours">--</span>
-              <span class="countdown-unit-label">Hours</span>
-            </div>
-            <div class="countdown-sep" aria-hidden="true">:</div>
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-mins">--</span>
-              <span class="countdown-unit-label">Mins</span>
-            </div>
-            <div class="countdown-sep" aria-hidden="true">:</div>
-            <div class="countdown-unit">
-              <span class="countdown-num" id="cd-secs">--</span>
-              <span class="countdown-unit-label">Secs</span>
-            </div>
-          </div>
         </div>
 
       </div>
